@@ -14,24 +14,35 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
             justify-content: center;
+            min-height: 100vh;
         }
         .container {
             display: flex;
             justify-content: center;
             gap: 20px;
-            width: 90%; /* Adjusted for better spacing */
+            flex-wrap: wrap;
+            width: 90%;
             max-width: 1200px;
         }
         .poster {
-            width: 35%; /* Increased size for better visibility */
+            width: 30vw; /* Adaptive size for screens */
+            max-width: 210mm; /* A4 width in pixels */
             height: auto;
             cursor: pointer;
             transition: transform 0.2s ease-in-out;
         }
         .poster:active, .poster:hover {
-            transform: scale(1.05); /* Smooth effect on click and hover */
+            transform: scale(1.05);
+        }
+        @media (max-width: 768px) {
+            .poster {
+                width: 80vw; /* Adjusts for smaller screens */
+            }
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>

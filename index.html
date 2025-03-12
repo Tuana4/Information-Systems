@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOST IN THE NOISE</title>
-    <!-- Link to Adobe Fonts (Typekit) for New Astro Bold -->
     <link rel="stylesheet" href="https://use.typekit.net/tpg4wcl.css">
     <style>
         body {
             background-color: black;
             color: white;
             text-align: center;
-            font-family: "new-astro", sans-serif; /* Use New Astro Bold */
-            font-weight: 700; /* Bold weight */
+            font-family: "new-astro", sans-serif;
+            font-weight: 700;
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -20,14 +19,23 @@
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
+            cursor: none; /* Hide default cursor */
+        }
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+            mix-blend-mode: difference;
         }
         .title {
             font-size: 40px;
             margin-bottom: 20px;
             text-transform: uppercase;
-            font-family: "new-astro", sans-serif; /* Ensure the title uses New Astro Bold */
-            font-weight: 700; /* Bold weight */
-            font-style: normal; /* Normal style */
         }
         .container {
             display: flex;
@@ -41,10 +49,10 @@
             width: 40%;
             max-width: 450px;
             height: auto;
-            cursor: pointer;
+            cursor: none;
             transition: transform 0.2s ease-in-out, filter 0.3s;
         }
-        .poster:active, .poster:hover {
+        .poster:hover {
             transform: scale(1.05);
             filter: contrast(1.2) brightness(1.1);
         }
@@ -59,15 +67,17 @@
         .restart {
             margin-top: 30px;
             font-size: 24px;
-            cursor: pointer;
+            cursor: none;
             color: white;
             background: none;
             border: none;
-            font-family: "new-astro", sans-serif; /* New Astro Bold */
-            font-weight: 700; /* Bold weight */
+            font-family: "new-astro", sans-serif;
+            font-weight: 700;
             text-decoration: underline;
             text-transform: uppercase;
             display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
         @media (max-width: 768px) {
             .container {
@@ -81,6 +91,7 @@
     </style>
 </head>
 <body>
+    <div class="custom-cursor"></div>
     <h1 class="title">CLICK TO SUBTRACT WORDS FROM EACH POSTER</h1>
     <audio id="clickSound" src="click-sound.mp3"></audio>
     <div class="container">
@@ -93,7 +104,7 @@
     <script>
         const clickSound = document.getElementById("clickSound");
         let animationCount = 0;
-        
+
         document.querySelectorAll('.poster').forEach(img => {
             img.addEventListener('click', function() {
                 clickSound.play();
@@ -120,9 +131,30 @@
                     this.replaceWith(video);
                     animationCount++;
                     if (animationCount === 3) {
-                        document.querySelector('.restart').style.display = 'block';
+                        const restartButton = document.querySelector('.restart');
+                        restartButton.style.display = 'block';
+                        setTimeout(() => {
+                            restartButton.style.opacity = '1';
+                        }, 100);
                     }
                 }
+            });
+        });
+
+        // Custom Cursor Effect
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        });
+
+        // Enlarge cursor on hover
+        document.querySelectorAll('.poster, .restart').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
             });
         });
     </script>

@@ -21,13 +21,17 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            width: 100%;
+            width: 90%;
+            max-width: 1200px;
         }
         .poster {
-            width: 45%; /* Each image takes nearly half of the screen width */
+            width: 30%; /* Adjusted size to match reference images with a slight border */
             height: auto;
             cursor: pointer;
-            transition: 0.3s;
+            transition: transform 0.2s ease-in-out;
+        }
+        .poster:active, .poster:hover {
+            transform: scale(1.05); /* Smooth effect on click and hover */
         }
     </style>
 </head>
@@ -48,16 +52,9 @@
                 if (this.dataset.stage === "1") {
                     this.src = this.dataset.newsrc;
                     this.dataset.stage = "2";
-                } else if (this.dataset.stage === "2") {
-                    playAnimation(this);
                 }
             });
         });
-
-        function playAnimation(img) {
-            alert("Animation and sound will be triggered here");
-            // Placeholder for video/sound logic
-        }
     </script>
 </body>
 </html>

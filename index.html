@@ -9,13 +9,18 @@
             background-color: black;
             color: white;
             text-align: center;
-            font-family: Arial, sans-serif;
+            font-family: 'New Astro Bold', Arial, sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            overflow: hidden;
+        }
+        .title {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
         .container {
             display: flex;
@@ -30,10 +35,21 @@
             max-width: 450px;
             height: auto;
             cursor: pointer;
-            transition: transform 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, filter 0.3s;
         }
         .poster:active, .poster:hover {
             transform: scale(1.05);
+            filter: contrast(1.2) brightness(1.1);
+        }
+        .glitch {
+            animation: glitch 0.3s infinite alternate;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-1px, 1px); }
+            100% { transform: translate(1px, -1px); }
         }
         @media (max-width: 768px) {
             .container {
@@ -47,22 +63,30 @@
     </style>
 </head>
 <body>
-    <h1>Click any image to transform</h1>
+    <h1 class="title">Click to subtract words from each poster</h1>
+    <audio id="clickSound" src="click-sound.mp3"></audio>
     <div class="container">
         <img src="Untitled-4-2.png" class="poster" id="poster1" data-newsrc="22q2-1.png" data-video="Automatic 2.MP4">
-        <img src="Untitled-7-2.png" class="poster" id="poster2" data-newsrc="22-1.png" data-video="Automatic.mp4">
+        <img src="Untitled-7-2.png" class="poster" id="poster2" data-newsrc="22-1.png" data-video="Automatic.MP4">
         <img src="Untitled-9.png" class="poster" id="poster3" data-newsrc="2nd-1.png" data-video="Automatic 3.MP4">
     </div>
     
     <script>
+        const clickSound = document.getElementById("clickSound");
+        
         document.querySelectorAll('.poster').forEach(img => {
             img.addEventListener('click', function() {
+                clickSound.play();
+                this.classList.add("glitch");
+                setTimeout(() => this.classList.remove("glitch"), 300);
+                
                 if (!this.dataset.stage) {
                     this.dataset.stage = "1";
                 }
                 if (this.dataset.stage === "1") {
                     this.src = this.dataset.newsrc;
                     this.dataset.stage = "2";
+                    document.querySelector('.title').textContent = "Click each poster to animate it with sound";
                 } else if (this.dataset.stage === "2") {
                     let video = document.createElement("video");
                     video.src = this.dataset.video;

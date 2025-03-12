@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lost in the Noise</title>
+    <title>LOST IN THE NOISE</title>
     <style>
+        @font-face {
+            font-family: 'New Astro Bold';
+            src: url('NewAstroBold.woff2') format('woff2');
+        }
+        
         body {
             background-color: black;
             color: white;
@@ -19,8 +24,9 @@
             overflow: hidden;
         }
         .title {
-            font-size: 24px;
+            font-size: 40px;
             margin-bottom: 20px;
+            text-transform: uppercase;
         }
         .container {
             display: flex;
@@ -34,6 +40,7 @@
             width: 40%;
             max-width: 450px;
             height: auto;
+            aspect-ratio: 1 / 1;
             cursor: pointer;
             transition: transform 0.2s ease-in-out, filter 0.3s;
         }
@@ -41,15 +48,16 @@
             transform: scale(1.05);
             filter: contrast(1.2) brightness(1.1);
         }
-        .glitch {
-            animation: glitch 0.3s infinite alternate;
-        }
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            25% { transform: translate(-2px, 2px); }
-            50% { transform: translate(2px, -2px); }
-            75% { transform: translate(-1px, 1px); }
-            100% { transform: translate(1px, -1px); }
+        .restart {
+            margin-top: 30px;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            background: none;
+            border: none;
+            font-family: 'New Astro Bold', Arial, sans-serif;
+            text-decoration: underline;
+            text-transform: uppercase;
         }
         @media (max-width: 768px) {
             .container {
@@ -63,13 +71,14 @@
     </style>
 </head>
 <body>
-    <h1 class="title">Click to subtract words from each poster</h1>
+    <h1 class="title">CLICK TO SUBTRACT WORDS FROM EACH POSTER</h1>
     <audio id="clickSound" src="click-sound.mp3"></audio>
     <div class="container">
         <img src="Untitled-4-2.png" class="poster" id="poster1" data-newsrc="22q2-1.png" data-video="Automatic 2.MP4">
         <img src="Untitled-7-2.png" class="poster" id="poster2" data-newsrc="22-1.png" data-video="Automatic.MP4">
         <img src="Untitled-9.png" class="poster" id="poster3" data-newsrc="2nd-1.png" data-video="Automatic 3.MP4">
     </div>
+    <button class="restart" onclick="location.reload()">START OVER</button>
     
     <script>
         const clickSound = document.getElementById("clickSound");
@@ -77,8 +86,6 @@
         document.querySelectorAll('.poster').forEach(img => {
             img.addEventListener('click', function() {
                 clickSound.play();
-                this.classList.add("glitch");
-                setTimeout(() => this.classList.remove("glitch"), 300);
                 
                 if (!this.dataset.stage) {
                     this.dataset.stage = "1";
@@ -86,7 +93,7 @@
                 if (this.dataset.stage === "1") {
                     this.src = this.dataset.newsrc;
                     this.dataset.stage = "2";
-                    document.querySelector('.title').textContent = "Click each poster to animate it with sound";
+                    document.querySelector('.title').textContent = "CLICK EACH POSTER TO ANIMATE IT WITH SOUND";
                 } else if (this.dataset.stage === "2") {
                     let video = document.createElement("video");
                     video.src = this.dataset.video;

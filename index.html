@@ -10,15 +10,21 @@
             color: white;
             text-align: center;
             font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
         }
         .container {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-top: 50px;
+            width: 100%;
         }
         .poster {
-            width: 400px; /* Increased size */
+            width: 45%; /* Each image takes nearly half of the screen width */
             height: auto;
             cursor: pointer;
             transition: 0.3s;
@@ -28,25 +34,27 @@
 <body>
     <h1>Click any image to transform</h1>
     <div class="container">
-        <img src="images/Untitled-4-2.png" class="poster" id="poster1" onclick="changeImage('poster1', 'images/22q2-1.png')">
-        <img src="images/Untitled-7-2.png" class="poster" id="poster2" onclick="changeImage('poster2', 'images/2nd-1.png')">
-        <img src="images/Untitled-9.png" class="poster" id="poster3" onclick="changeImage('poster3', 'images/22-1.png')">
+        <img src="images/Untitled-4-2.png" class="poster" id="poster1" data-newsrc="images/22q2-1.png">
+        <img src="images/Untitled-7-2.png" class="poster" id="poster2" data-newsrc="images/2nd-1.png">
+        <img src="images/Untitled-9.png" class="poster" id="poster3" data-newsrc="images/22-1.png">
     </div>
     
     <script>
-        function changeImage(id, newSrc) {
-            let img = document.getElementById(id);
-            if (!img.dataset.stage) {
-                img.dataset.stage = "1";
-            }
-            if (img.dataset.stage === "1") {
-                img.src = newSrc;
-                img.dataset.stage = "2";
-                img.onclick = function() { playAnimation(id); };
-            }
-        }
+        document.querySelectorAll('.poster').forEach(img => {
+            img.addEventListener('click', function() {
+                if (!this.dataset.stage) {
+                    this.dataset.stage = "1";
+                }
+                if (this.dataset.stage === "1") {
+                    this.src = this.dataset.newsrc;
+                    this.dataset.stage = "2";
+                } else if (this.dataset.stage === "2") {
+                    playAnimation(this);
+                }
+            });
+        });
 
-        function playAnimation(id) {
+        function playAnimation(img) {
             alert("Animation and sound will be triggered here");
             // Placeholder for video/sound logic
         }

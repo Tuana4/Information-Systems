@@ -25,9 +25,9 @@
             width: 100%;
             max-width: 1300px;
         }
-        .poster {
-            width: 35%;
-            max-width: 420px;
+        .poster, .video {
+            width: 40%;
+            max-width: 450px;
             height: auto;
             cursor: pointer;
             transition: transform 0.2s ease-in-out;
@@ -39,7 +39,7 @@
             .container {
                 flex-direction: column;
             }
-            .poster {
+            .poster, .video {
                 width: 80%;
                 max-width: none;
             }
@@ -49,9 +49,9 @@
 <body>
     <h1>Click any image to transform</h1>
     <div class="container">
-        <img src="Untitled-4-2.png" class="poster" id="poster1" data-newsrc="22q2-1.png" data-video="Automatic.MP4">
-        <img src="Untitled-7-2.png" class="poster" id="poster2" data-newsrc="22-1.png" data-video="Automatic 3.MP4">
-        <img src="Untitled-9.png" class="poster" id="poster3" data-newsrc="2nd-1.png" data-video="Automatic 2.MP4">
+        <img src="Untitled-4-2.png" class="poster" id="poster1" data-newsrc="22q2-1.png" data-video="Automatic 2.MP4">
+        <img src="Untitled-7-2.png" class="poster" id="poster2" data-newsrc="2nd-1.png" data-video="Automatic 3.MP4">
+        <img src="Untitled-9.png" class="poster" id="poster3" data-newsrc="22-1.png" data-video="Automatic.MP4">
     </div>
     
     <script>
@@ -69,8 +69,7 @@
                     video.autoplay = true;
                     video.loop = true;
                     video.muted = false;
-                    video.style.width = this.style.width;
-                    video.style.maxWidth = this.style.maxWidth;
+                    video.classList.add("video");
                     this.replaceWith(video);
                 }
             });

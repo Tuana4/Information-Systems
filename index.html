@@ -36,17 +36,24 @@
             width: 100%;
             max-width: 1300px;
         }
-        .poster, .video {
+        .poster {
             width: 40%;
             max-width: 450px;
             height: auto;
-            aspect-ratio: 1 / 1;
             cursor: pointer;
             transition: transform 0.2s ease-in-out, filter 0.3s;
         }
         .poster:active, .poster:hover {
             transform: scale(1.05);
             filter: contrast(1.2) brightness(1.1);
+        }
+        .video {
+            width: 40%;
+            max-width: 450px;
+            height: auto;
+        }
+        .video-square {
+            aspect-ratio: 1 / 1;
         }
         .restart {
             margin-top: 30px;
@@ -58,6 +65,7 @@
             font-family: 'New Astro Bold', Arial, sans-serif;
             text-decoration: underline;
             text-transform: uppercase;
+            display: none;
         }
         @media (max-width: 768px) {
             .container {
@@ -75,13 +83,14 @@
     <audio id="clickSound" src="click-sound.mp3"></audio>
     <div class="container">
         <img src="Untitled-4-2.png" class="poster" id="poster1" data-newsrc="22q2-1.png" data-video="Automatic 2.MP4">
-        <img src="Untitled-7-2.png" class="poster" id="poster2" data-newsrc="22-1.png" data-video="Automatic.MP4">
+        <img src="Untitled-7-2.png" class="poster" id="poster2" data-newsrc="22-1.png" data-video="Automatic.mp4">
         <img src="Untitled-9.png" class="poster" id="poster3" data-newsrc="2nd-1.png" data-video="Automatic 3.MP4">
     </div>
     <button class="restart" onclick="location.reload()">START OVER</button>
     
     <script>
         const clickSound = document.getElementById("clickSound");
+        let animationCount = 0;
         
         document.querySelectorAll('.poster').forEach(img => {
             img.addEventListener('click', function() {
@@ -101,7 +110,16 @@
                     video.loop = true;
                     video.muted = false;
                     video.classList.add("video");
+                    
+                    if (this.dataset.video === "Automatic.MP4") {
+                        video.classList.add("video-square");
+                    }
+                    
                     this.replaceWith(video);
+                    animationCount++;
+                    if (animationCount === 3) {
+                        document.querySelector('.restart').style.display = 'block';
+                    }
                 }
             });
         });

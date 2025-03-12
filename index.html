@@ -6,28 +6,46 @@
     <title>Lost in the Noise</title>
     <style>
         body {
-            background: black;
+            background-color: black;
             color: white;
-            font-family: Arial, sans-serif;
             text-align: center;
+            font-family: Arial, sans-serif;
         }
-        .poster-container {
-            position: relative;
-            display: inline-block;
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+        .poster {
+            width: 300px;
             cursor: pointer;
-            margin-bottom: 20px;
+            transition: 0.3s;
         }
-        .poster, .poster-subtracted {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            transition: opacity 0.5s;
+    </style>
+</head>
+<body>
+    <h1>Click any image to transform</h1>
+    <div class="container">
+        <img src="Untitled-4-2.png" class="poster" id="poster1" onclick="changeImage('poster1', '22q2-1.png')">
+        <img src="Untitled-7-2.png" class="poster" id="poster2" onclick="changeImage('poster2', '2nd-1.png')">
+        <img src="Untitled-9.png" class="poster" id="poster3" onclick="changeImage('poster3', '22-1.png')">
+    </div>
+    
+    <script>
+        function changeImage(id, newSrc) {
+            let img = document.getElementById(id);
+            if (img.dataset.stage === "1") {
+                img.src = newSrc;
+                img.dataset.stage = "2";
+                img.onclick = function() { playAnimation(id); };
+            }
         }
-        .poster-subtracted {
-            opacity: 0;
+
+        function playAnimation(id) {
+            alert("Animation and sound will be triggered here");
+            // Placeholder for video/sound logic
         }
-        #video-container {
-            display: none;
-            margin-top: 20px;
-        }
+    </script>
+</body>
+</html>

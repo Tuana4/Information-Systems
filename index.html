@@ -18,7 +18,8 @@
             margin-top: 50px;
         }
         .poster {
-            width: 300px;
+            width: 400px; /* Increased size */
+            height: auto;
             cursor: pointer;
             transition: 0.3s;
         }
@@ -27,14 +28,17 @@
 <body>
     <h1>Click any image to transform</h1>
     <div class="container">
-        <img src="Untitled-4-2.png" class="poster" id="poster1" onclick="changeImage('poster1', '22q2-1.png')">
-        <img src="Untitled-7-2.png" class="poster" id="poster2" onclick="changeImage('poster2', '2nd-1.png')">
-        <img src="Untitled-9.png" class="poster" id="poster3" onclick="changeImage('poster3', '22-1.png')">
+        <img src="images/Untitled-4-2.png" class="poster" id="poster1" onclick="changeImage('poster1', 'images/22q2-1.png')">
+        <img src="images/Untitled-7-2.png" class="poster" id="poster2" onclick="changeImage('poster2', 'images/2nd-1.png')">
+        <img src="images/Untitled-9.png" class="poster" id="poster3" onclick="changeImage('poster3', 'images/22-1.png')">
     </div>
     
     <script>
         function changeImage(id, newSrc) {
             let img = document.getElementById(id);
+            if (!img.dataset.stage) {
+                img.dataset.stage = "1";
+            }
             if (img.dataset.stage === "1") {
                 img.src = newSrc;
                 img.dataset.stage = "2";

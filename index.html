@@ -26,8 +26,8 @@
             max-width: 1200px;
         }
         .poster {
-            width: 30vw; /* Adaptive size for screens */
-            max-width: 210mm; /* A4 width in pixels */
+            width: 25vw; /* Slightly smaller than A4 proportion */
+            max-width: 180mm; /* Adjusted A4 width in pixels */
             height: auto;
             cursor: pointer;
             transition: transform 0.2s ease-in-out;
@@ -37,7 +37,7 @@
         }
         @media (max-width: 768px) {
             .poster {
-                width: 80vw; /* Adjusts for smaller screens */
+                width: 75vw; /* Adjusts for smaller screens */
             }
             .container {
                 flex-direction: column;
